@@ -1,4 +1,4 @@
-package com.shounak.vpnApp;
+package com.shounakdas.vpnApp;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
