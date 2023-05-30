@@ -31,6 +31,11 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       title: 'OpenVpn Demo',
       home: SplashScreen(),
+
+      //theme
+      theme:
+          ThemeData(appBarTheme: AppBarTheme(centerTitle: true, elevation: 3)),
+
       debugShowCheckedModeBanner: false,
     );
   }
