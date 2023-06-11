@@ -18,6 +18,8 @@ dependencies:
   http: ^1.0.0
   csv: ^5.0.2
   lottie: ^2.3.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 
 dev_dependencies:

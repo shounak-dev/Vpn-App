@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:lottie/lottie.dart';
@@ -6,35 +7,28 @@ import '../controllers/location_controller.dart';
 import '../main.dart';
 import '../widgets/vpn_card.dart';
 
-class LocationScreen extends StatefulWidget {
-  const LocationScreen({super.key});
+class LocationScreen extends StatelessWidget {
+  LocationScreen({super.key});
 
-  @override
-  State<LocationScreen> createState() => _LocationScreenState();
-}
-
-class _LocationScreenState extends State<LocationScreen> {
   final _controller = LocationController();
 
   @override
-  void initState() {
-    super.initState();
-    _controller.getVpnData();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    if (_controller.vpnList.isEmpty) _controller.getVpnData();
+
     return Obx(
       () => Scaffold(
         //app bar
         appBar: AppBar(
           title: Text('VPN Locations (${_controller.vpnList.length})'),
+        ),
+
+        //refresh button
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 10, right: 10),
+          child: FloatingActionButton(
+              onPressed: () => _controller.getVpnData(),
+              child: Icon(CupertinoIcons.refresh)),
         ),
 
         body: _controller.isLoading.value
@@ -63,7 +57,7 @@ class _LocationScreenState extends State<LocationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //lottie animation
-            LottieBuilder.asset('assets/lottie/loading.json',
+            LottieBuilder.asset('assets/lottie/97171-loading-plane.json',
                 width: mq.width * .7),
 
             //text

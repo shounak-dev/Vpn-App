@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'helpers/pref.dart';
 import 'screens/splash_screen.dart';
 
 late Size mq;
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //enter full-screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
+  await Pref.initializeHive();
 
   //for setting orientation to portrait only
   SystemChrome.setPreferredOrientations(
@@ -18,25 +21,32 @@ void main() {
   });
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'OpenVpn Demo',
       home: SplashScreen(),
 
-      //theme
+      ////theme
       theme:
           ThemeData(appBarTheme: AppBarTheme(centerTitle: true, elevation: 3)),
+
+      themeMode: Pref.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+
+      //dark theme
+      darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          appBarTheme: AppBarTheme(centerTitle: true, elevation: 3)),
 
       debugShowCheckedModeBanner: false,
     );
   }
+}
+
+extension AppTheme on ThemeData {
+  Color get lightText => Pref.isDarkMode ? Colors.white70 : Colors.black54;
+  Color get bottomNav => Pref.isDarkMode ? Colors.white12 : Colors.blue;
 }
