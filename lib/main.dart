@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'helpers/ad_helper.dart';
+import 'helpers/config.dart';
 import 'helpers/pref.dart';
 import 'screens/splash_screen.dart';
 
@@ -12,7 +15,10 @@ Future<void> main() async {
   //enter full-screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
+  await Firebase.initializeApp();
+  await Config.initConfig();
   await Pref.initializeHive();
+  await AdHelper.initAds();
 
   //for setting orientation to portrait only
   SystemChrome.setPreferredOrientations(

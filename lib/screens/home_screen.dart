@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
+import '../helpers/config.dart';
 import '../helpers/pref.dart';
 import '../main.dart';
 
@@ -34,9 +35,12 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Get.changeThemeMode(
-                    Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                Pref.isDarkMode = !Pref.isDarkMode;
+                if (Config.hideAds) {
+                  Get.changeThemeMode(
+                      Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                  Pref.isDarkMode = !Pref.isDarkMode;
+                  return;
+                }
               },
               icon: Icon(
                 Icons.brightness_medium,
